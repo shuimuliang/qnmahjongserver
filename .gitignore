@@ -12,3 +12,18 @@
 
 # Project-local glide cache, RE: https://github.com/Masterminds/glide/issues/736
 .glide/
+
+proto/
+
+vendor/
+
+.DS_Store
+*/.DS_Store
+
+*.log
+*/*.log
+
+qnmahjong
+main
+
+dump.rdb
