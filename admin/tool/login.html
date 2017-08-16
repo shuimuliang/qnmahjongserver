@@ -1,0 +1,49 @@
+{{define "login"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜后台管理</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/handsontable.full.min.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <h1>千胜后台管理</h1>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <form action="login" method="post" class="am-form">
+        <label for="email">电子邮箱:</label>
+        <input type="email" name="email" id="email" value="" required="required" placeholder="输入电子邮箱">
+        <br>
+        <label for="password">密码:</label>
+        <input type="password" name="password" id="password" value="" required="required" placeholder="输入密码">
+        <br>
+        <input type="submit" name="" id="" value="登 录" class="am-btn am-btn-primary am-btn-block">
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+  <script src="assets/js/handsontable.full.min.js"></script>
+</body>
+
+</html>
+{{end}}

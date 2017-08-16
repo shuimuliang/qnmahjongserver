@@ -1,0 +1,89 @@
+{{define "user-balance"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">账户信息</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <span class="am-text-xl">
+        ¥0
+      <br>
+      </span>
+      <span class="am-text-xs">
+        总提成=下级代理提成+我直接销售的玉提成+活动首充赠送+500元分销红包<br>
+        备注:分销红包在充值满9000时可提取,未满足则不计算到总额里,打款金额满100元起发,未满足则累计在结余金额里
+      </span>
+      <br>
+      <table class="am-table am-table-bordered am-table-radius am-table-striped">
+        <thead>
+          <tr>
+            <th>代理提成</th>
+            <th>金额</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>今日提成</td>
+            <td>¥{{.GetMoney .Balance1}}</td>
+          </tr>
+          <tr>
+            <td>本周总提成</td>
+            <td>¥{{.GetMoney .Balance2}}</td>
+          </tr>
+          <tr>
+            <td>本周下级代理提成</td>
+            <td>¥{{.GetMoney .Balance3}}</td>
+          </tr>
+          <tr>
+            <td>本周我直接销售的玉提成</td>
+            <td>¥{{.GetMoney .Balance4}}</td>
+          </tr>
+          <tr>
+            <td>本周活动首充赠送</td>
+            <td>¥{{.GetMoney .Balance5}}</td>
+          </tr>
+          <tr>
+            <td>500元分销红包</td>
+            <td>¥{{.GetMoney .Balance6}}</td>
+          </tr>
+          <tr>
+            <td>总打款金额</td>
+            <td>¥{{.GetMoney .Balance7}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

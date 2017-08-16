@@ -1,0 +1,20 @@
+/* Write your styles */
+
+.body {
+    background-color: #f0ffff;
+}
+
+.header {
+    text-align: center;
+    background-color: #7fffd4;
+}
+
+.header h1 {
+    font-size: 200%;
+    color: #333;
+    margin-top: 30px;
+}
+
+.header p {
+    font-size: 14px;
+}

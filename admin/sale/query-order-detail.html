@@ -1,0 +1,79 @@
+{{define "query-order-detail"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/query-order"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">充值查询</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <div class="am-text-center">
+        <label>开始日期: {{.StartDate}}</label>
+        <br>
+        <label>结束日期: {{.EndDate}}</label>
+        <br>
+        <label>玩家ID: {{.PlayerID}}</label>
+        <br>
+        <label>总玉数: {{.CardsCnt}}枚</label>
+        <br>
+        <label>总金额: ¥{{.GetMoney .MoneyCnt}}</label>
+        <br>
+        <br>
+      </div>
+      {{if gt .OrderLength 0}}
+      <table class="am-table am-table-bordered am-table-radius am-table-striped">
+        <thead>
+          <tr>
+            <th>玉数</th>
+            <th>金额</th>
+            <th>首充</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range .OrderList}}
+          <tr>
+            <td>{{.DiamondCnt}}枚</td>
+            <td>¥{{.GetMoney .MoneyCnt}}</td>
+            {{if eq .FirstBuyAward 1}}
+            <td>是</td>
+            {{else if eq .FirstBuyAward 0}}
+            <td>否</td>
+            {{end}}
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+      {{end}}
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

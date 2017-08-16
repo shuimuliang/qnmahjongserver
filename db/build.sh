@@ -1,0 +1,2 @@
+# xo mysql://root:@127.0.0.1:3306/mj -o dao -f .go -i int32 --ignore-fields login_time register_time change_time send_time add_time revise_time
+xo mysql://root:@127.0.0.1:3306/mj -o dao -f .go -i int32

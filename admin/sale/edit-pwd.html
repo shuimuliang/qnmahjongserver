@@ -1,0 +1,54 @@
+{{define "edit-pwd"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/edit-info"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">修改密码</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <form action="edit-pwd" method="post" class="am-form">
+        <label for="password">原密码:</label>
+        <input type="password" name="password" id="password" value="" required="required" placeholder="输入原密码">
+        <br>
+        <label for="new-password">新密码:</label>
+        <input type="password" name="new-password" id="new-password" value="" required="required" placeholder="输入新密码">
+        <br>
+        <label for="new-password_ensure">确认密码:</label>
+        <input type="password" name="new-password_ensure" id="new-password_ensure" value="" required="required" placeholder="输入确认密码">
+        <br>
+        <input type="submit" name="" id="" value="提 交" class="am-btn am-btn-primary am-btn-block">
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

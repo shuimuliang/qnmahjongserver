@@ -1,0 +1,7 @@
+mysql_address = "root:123456@tcp(mysql:3306)/mj?charset=utf8mb4&parseTime=True&loc=Local"
+
+redis_address = ":6379"
+
+login_address = "100.100.33.99:5001"
+
+logic_address = "100.100.33.99:5002"

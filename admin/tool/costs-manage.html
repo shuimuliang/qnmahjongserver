@@ -1,0 +1,132 @@
+{{define "costs-manage"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜后台管理</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/handsontable.full.min.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <!--<a class="am-u-sm-2 am-padding-vertical" href="javascript:window.location.href=document.referrer;"><i class="am-icon-chevron-left am-icon-sm"></i></a>-->
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">房卡配置</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <div class="hot handsontable htRowHeaders htColumnHeaders" id="table"></div>
+      <br/>
+      <button type="button" class="am-btn am-btn-primary am-btn-block" id="save">保存修改</button>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+  <script src="assets/js/handsontable.full.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // var data = {{.}};
+      var data = {{.}};
+      var container = $('#table');
+      var width = container.width();
+      var hot = container.handsontable({
+        data: data,
+        colHeaders: ['index_id', 'mj_type', 'mj_desc', 'rounds', 'cards', 'coins'],
+        colHeaders: ['id', '麻将', '描述', '局数', '消耗玉', '消耗币'],
+        manualColumnResize: [width * 0.1, width * 0.1, width * 0.2, width * 0.2, width * 0.2, width * 0.2],
+        columns: [{
+            data: 'index_id',
+            type: 'numeric'
+          },
+          {
+            data: 'mj_type',
+            type: 'numeric'
+          },
+          {
+            data: 'mj_desc',
+            type: 'text'
+          },
+          {
+            data: 'rounds',
+            type: 'numeric'
+          },
+          {
+            data: 'cards',
+            type: 'numeric'
+          },
+          {
+            data: 'coins',
+            type: 'numeric'
+          }
+        ],
+        minSpareRows: 1
+      });
+      container.addClass("am-scrollable-horizontal");
+      $('#save').click(function () {
+        var instance = container.handsontable('getInstance');
+        var dataList = instance.getData();
+        var newDataList = [];
+        var isNull = false;
+        for (var i in dataList) {
+          var tempData = {
+            index_id: dataList[i][0],
+            mj_type: dataList[i][1],
+            mj_desc: dataList[i][2],
+            rounds: dataList[i][3],
+            cards: dataList[i][4],
+            coins: dataList[i][5],
+          }
+          for (var j in tempData) {
+            if (tempData[j] == null || tempData[j] == undefined) {
+              isNull = true;
+            }
+          }
+          if (!isNull) {
+            newDataList[i] = tempData;
+          }
+          isNull = false
+        }
+        var data = JSON.stringify({
+          data: newDataList
+        });
+        $.post("/costs-manage", data, function (data, status) {
+          console.log(data, status);
+          if (status == "success") {
+            if (data == "success") {
+              alert("修改成功");
+              window.location.href = window.location.href;
+            }
+            if (data == "failed") {
+              alert("修改失败");
+            }
+          }
+        });
+      });
+      $(window).resize(function () {
+        // window.location.href = window.location.href;
+      });
+    });
+  </script>
+</body>
+
+</html>
+{{end}}

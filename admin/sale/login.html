@@ -1,0 +1,49 @@
+{{define "login"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <h1>千胜分销系统</h1>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <form action="login" method="post" class="am-form">
+        <label for="ag_id">游戏ID:</label>
+        <input type="number" name="ag_id" id="ag_id" value="" required="required" placeholder="输入游戏id">
+        <br>
+        <label for="password">密码:</label>
+        <input type="password" name="password" id="password" value="" required="required" placeholder="输入密码">
+        <br>
+        <input type="submit" name="" id="" value="登 录" class="am-btn am-btn-primary am-btn-block">
+        <br>
+        <a href="/register">没有账号，请注册</a>
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

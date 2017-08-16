@@ -1,0 +1,56 @@
+{{define "query-order"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">充值查询</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <form action="query-order" method="post" class="am-form">
+        <label for="player-id"> 玩家ID:</label>
+        <input type="number" name="player-id" id="player-id" class="am-form-field" placeholder="输入玩家ID" required="required" />
+        <br>
+        <label for="start-date"> 开始日期:</label>
+        <input type="text" name="start-date" id="start-date" class="am-form-field" placeholder="选择开始日期" data-am-datepicker required="required"
+        />
+        <br>
+        <label for="end-date">结束日期:</label>
+        <input type="text" name="end-date" id="end-date" class="am-form-field" placeholder="选择结束日期" data-am-datepicker required="required"
+        />
+        <br>
+        <input type="submit" name="" id="" value="查 询" class="am-btn am-btn-primary am-btn-block">
+      </form>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

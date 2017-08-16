@@ -1,0 +1,76 @@
+{{define "my-agents"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">我的代理</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <div class="am-panel-group" id="accordion">
+        {{range .}}
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-{{.AgID}}'}">
+              代理ID: {{.AgID}}
+            </h4>
+          </div>
+          <div id="do-not-say-{{.AgID}}" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd">
+              <ul class="am-avg-sm-3">
+                <li>
+                  <img src="{{.Headimgurl}}" width="90px" height="90px" class="am-img-thumbnail am-radius">
+                </li>
+                <li class="am-vertical-align" style="height: 90px;">
+                  <div class="am-vertical-align-middle">
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Nickname}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">
+                    {{if eq .AgLevel 0}}
+                    管理员
+                    {{else if eq .AgLevel 1}}
+                    大咖一级
+                    {{else if eq .AgLevel 2}}
+                    小咖二级
+                    {{end}}
+                    </strong>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

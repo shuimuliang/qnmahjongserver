@@ -1,0 +1,45 @@
+# 探索
+/survey/ts 			# 探索剩余时间
+/survey/begin 		# 开始探索
+/survey/payend   	# 使用钻石结束探索
+/survey/end			# 时间到结束探索
+
+# 个人信息
+/p/info 			# 个人信息(等级、钻石等)
+
+# 活动
+/event/tag			# 在进行的活动tag(演习、武具)
+
+# 任务领取
+
+# 卡片
+/card/list			# 卡片一览(显示分组次序,leader)
+/card/equip/adjust	# 装备(整体数值、攻击、HP、回复、特殊能力有限、卸下)
+/card/group/list	# 战斗组列表, 攻、HP、回复、幸运总和
+/card/group/edit  	# 编辑某战斗组
+/card/fp/list		# 卡片对应fp
+/card/fp/release	# 释放卡片到fp
+/card/fp/lock		# 锁定卡片不能卖
+
+# 武具
+/equip/list			# 武具一览
+/equip/eat			# 武具合成
+/equip/upgrade		# 武具进化(需要进化材料)
+/equip/sell			# 出售换金币
+/equip/lock			# 锁定武具不能卖出
+
+# 商店
+/shop/gem/list		# 商店宝石列表
+/shop/gem/getenergy # 用宝石兑换体力
+/shop/equip/enlarge # 用宝石扩张卡片和武具槽
+
+# 抽奖
+/bet/equip			# 用名声抽武器
+/bet/card			# 用宝石抽卡(1抽，10连抽)
+
+# 好友关系
+/p/friend/list		# 好友列表
+/p/friend/add		# 添加好友
+/p/friend/fromreq	# 待处理好友请求
+/p/friend/toreq		# 发出去的好友请求
+/p/friend/toreq/c	# 清理单条发出去的好友请求

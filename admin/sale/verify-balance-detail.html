@@ -1,0 +1,129 @@
+{{define "verify-balance-detail"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/verify-balance"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">提现审核</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <div class="am-panel-group" id="accordion">
+        {{range .}}
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-{{.IndexID}}'}">
+              代理ID: {{.AgID}}
+            </h4>
+          </div>
+          <div id="do-not-say-{{.IndexID}}" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd">
+              <ul class="am-avg-sm-3">
+                <li>
+                  <img src="{{.Headimgurl}}" width="90px" height="90px" class="am-img-thumbnail am-radius">
+                </li>
+                <li class="am-vertical-align" style="height: 90px;">
+                  <div class="am-vertical-align-middle">
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Nickname}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">
+                    {{if eq .AgLevel 0}}
+                    管理员
+                    {{else if eq .AgLevel 1}}
+                    大咖一级
+                    {{else if eq .AgLevel 2}}
+                    小咖二级
+                    {{end}}
+                    </strong><br>
+                  </div>
+                </li>
+              </ul>
+              <ul>
+              </ul>
+              <ul class="am-avg-sm-3">
+                <li>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">应打款:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">累计结余:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">代理提成:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">销售玉提成:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">首充赠送:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">分销红包:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">真实姓名:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">支付宝:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">微信:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">手机:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">邮箱:</strong><br>
+                </li>
+                <li class="am-vertical-align">
+                  <div class="am-vertical-align-middle">
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .LastWeekDakuan}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .LastWeekLeft}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .LowAgentsAward}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .CardsAward}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .FirstBuyAward}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .Hongbao}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Realname}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Alipay}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Weixin}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Telephone}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Email}}</strong><br>
+                  </div>
+                </li>
+                <li class="am-vertical-align">
+                  <div class="am-vertical-align-middle">
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">满100元起发</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">
+                    {{if eq .Delflag 0}}
+                    状态: 未打款
+                    {{else if eq .Delflag 1}}
+                    状态: 已打款
+                    {{else if eq .Delflag 2}}
+                    状态: 已结余
+                    {{end}}
+                    </strong><br> {{if eq .Delflag 0}} {{if ge .LastWeekDakuan 10000}}
+                    <form action="verify-balance-detail" method="post" class="am-form">
+                      <input type="number" name="ag-id" id="ag-id" value="{{.AgID}}" style="display: none">
+                      <input type="number" name="index-id" id="index-id" value="{{.IndexID}}" style="display: none">
+                      <br>
+                      <input type="submit" name="" id="" value="打 款" class="am-btn am-btn-primary">
+                    </form>
+                    {{end}} {{end}}
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

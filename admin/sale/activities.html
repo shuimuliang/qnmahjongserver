@@ -1,0 +1,97 @@
+{{define "activities"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">推广活动</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <div class="am-panel-group" id="accordion">
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-1'}">
+              1、代理提成
+            </h4>
+          </div>
+          <div id="do-not-say-1" class="am-panel-collapse am-collapse am-in">
+            <div class="am-panel-bd">
+              活动时间：长期有效
+              <br> 活动说明：上级代理可从下级代理的玉销售额中提成5%
+            </div>
+          </div>
+        </div>
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-2'}">
+              2、我直接销售的玉提成
+            </h4>
+          </div>
+          <div id="do-not-say-2" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd">
+              活动时间：长期有效
+              <br> 活动说明：1级代理提成45%, 2级代理提成35%
+              <br> 备注信息：2级代理单月销售达到1500个玉可提升至1级代理
+            </div>
+          </div>
+        </div>
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-3'}">
+              3、玩家首充赠送
+            </h4>
+          </div>
+          <div id="do-not-say-3" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd">
+              活动时间：长期有效
+              <br> 活动说明：代理额外提成玩家首充金额的10%
+            </div>
+          </div>
+        </div>
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-4'}">
+              4、500元分销红包
+            </h4>
+          </div>
+          <div id="do-not-say-4" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd">
+              活动时间：长期有效
+              <br> 活动说明：代理直接销售业绩达到9000元将一次性获得500元分销红包
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

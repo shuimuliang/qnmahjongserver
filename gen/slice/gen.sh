@@ -1,0 +1,3 @@
+./cleanup.sh
+echo generating source...
+gen

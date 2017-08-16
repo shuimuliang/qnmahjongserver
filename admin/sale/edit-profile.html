@@ -1,0 +1,61 @@
+{{define "edit-profile"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/edit-info"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">个人资料</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <form action="edit-profile" method="post" class="am-form">
+        <label for="ag_id">真实姓名:</label>
+        <input type="text" name="realname" id="realname" value="{{.Realname}}" placeholder="输入真实姓名">
+        <br>
+        <label for="ag_id">微信:</label>
+        <input type="text" name="weixin" id="weixin" value="{{.Weixin}}" placeholder="输入微信帐号">
+        <br>
+        <label for="ag_id">支付宝:</label>
+        <input type="text" name="alipay" id="alipay" value="{{.Alipay}}" placeholder="输入支付宝账号">
+        <br>
+        <label for="ag_id">手机:</label>
+        <input type="number" name="telephone" id="telephone" value="{{.Telephone}}" placeholder="输入手机号">
+        <br>
+        <label for="ag_id">邮箱:</label>
+        <input type="email" name="email" id="email" value="{{.Email}}" placeholder="输入邮箱">
+        <br>
+        <input type="submit" name="" id="" value="提 交" class="am-btn am-btn-primary am-btn-block">
+      </form>
+      <hr>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

@@ -1,0 +1,5 @@
+#!/bin/sh
+sh buildpf.sh
+sh buildpub.sh
+# sh buildpve.sh
+#sh buildchat.sh

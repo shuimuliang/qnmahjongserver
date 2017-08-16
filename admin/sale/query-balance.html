@@ -1,0 +1,87 @@
+{{define "query-balance"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <div class="am-u-sm-12">
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-chevron-left am-icon-sm"></i></a>
+        <strong class="am-u-sm-8 am-padding-vertical am-text-lg">返现明细查询</strong>
+        <a class="am-u-sm-2 am-padding-vertical" href="/index"><i class="am-icon-home am-icon-sm"></i></a>
+      </div>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <div class="am-panel-group" id="accordion">
+        {{range .}}
+        <div class="am-panel am-panel-default">
+          <div class="am-panel-hd">
+            <h4 class="am-panel-title" data-am-collapse="{parent: '#accordion', target: '#do-not-say-{{.IndexID}}'}">
+              {{.GetDate .StartTime}} 至 {{.GetDate .EndTime}}
+            </h4>
+          </div>
+          <div id="do-not-say-{{.IndexID}}" class="am-panel-collapse am-collapse">
+            <div class="am-panel-bd">
+              <ul class="am-avg-sm-3">
+                <li>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">状态:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">应打款:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">累积结余:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">代理提成:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">销售玉提成:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">首充赠送:</strong><br>
+                  <strong class="am-link-muted am-text-lg am-text-nowrap">分销红包:</strong><br>
+                </li>
+                <li class="am-vertical-align">
+                  <div class="am-vertical-align-middle">
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">
+                    {{if eq .Delflag 0}}
+                    未打款
+                    {{else if eq .Delflag 1}}
+                    已打款
+                    {{else if eq .Delflag 2}}
+                    已结余
+                    {{end}}
+                    </strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .LastWeekDakuan}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .LastWeekLeft}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .LowAgentsAward}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .CardsAward}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .FirstBuyAward}}</strong><br>
+                    <strong class="am-link-muted am-text-lg am-text-nowrap">¥{{.GetMoney .Hongbao}}</strong><br>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        {{end}}
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

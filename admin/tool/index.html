@@ -1,0 +1,66 @@
+{{define "index"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜后台管理</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/handsontable.full.min.css">
+  <link rel="stylesheet" href="assets/css/tool.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <h1>千胜后台管理</h1>
+    </div>
+  </header>
+
+  <br/>
+  <!--<div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <ul class="am-list am-list-border">
+      </ul>
+    </div>
+  </div>-->
+
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <ul class="am-list am-list-border">
+        <li><a href="/games-manage"><i class="am-icon-wrench am-icon-fw"></i> 游戏配置<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/costs-manage"><i class="am-icon-wrench am-icon-fw"></i> 房卡配置<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/modules-manage"><i class="am-icon-wrench am-icon-fw"></i> 模块配置<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/shops-manage"><i class="am-icon-wrench am-icon-fw"></i> 商品配置<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/accounts-manage"><i class="am-icon-wrench am-icon-fw"></i> 账号管理<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/roles-manage"><i class="am-icon-wrench am-icon-fw"></i> 角色管理<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/permissions-manage"><i class="am-icon-wrench am-icon-fw"></i> 权限管理<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/refresh_config"><i class="am-icon-refresh am-icon-fw"></i> 刷新配置<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <ul class="am-list am-list-border">
+        <li><a href="/download_hnmj"><i class="am-icon-volume-up am-icon-fw"></i> 河南麻将<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/login"><i class="am-icon-power-off am-icon-fw"></i> 退出<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+  <script src="assets/js/handsontable.full.min.js"></script>
+</body>
+
+</html>
+{{end}}

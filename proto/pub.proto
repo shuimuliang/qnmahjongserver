@@ -1,0 +1,19 @@
+package pub;
+
+option java_package = "zerogame.info.capoker.proto";
+
+message MessagePair {
+    required int32 action_type = 1;
+    required bytes message_bytes = 2;
+}
+
+message ABSMessage {
+    // 抽象结构，包含消息类型和消息二进制流
+    repeated MessagePair msgList = 1;
+    optional string token = 2;         // 登陆后获取token
+    optional int32 channel = 3;        // 渠道号, 91 、PP 、AppStore
+    optional int32 subversion = 4;     // 软件版本号, 100, 101...
+    optional int32 message_id = 5;     // 消息id
+    optional int64 timestamp = 6;     // unix时间戳
+    optional int32 absActionType = 7;		// PubActionType.PubActionTypeId( 0普通业务逻辑消息,1认证消息)服务器客户端之间 此    字段只能是0和1
+}

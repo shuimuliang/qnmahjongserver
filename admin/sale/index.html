@@ -1,0 +1,120 @@
+{{define "index"}}
+<!doctype html>
+<html class="no-js fixed-layout">
+
+<head lang="en">
+  <meta charset="utf-8">
+  <title>千胜分销系统</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="assets/css/amazeui.min.css">
+  <link rel="stylesheet" href="assets/css/sale.css">
+</head>
+
+<body class="body">
+
+  <header class="header">
+    <div class="am-g">
+      <h1>千胜分销系统</h1>
+    </div>
+  </header>
+
+  <br/>
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <ul class="am-list am-list-border">
+        <li>
+          <ul class="am-avg-sm-3">
+            <li>
+              <img src="{{.Headimgurl}}" width="90px" height="90px" class="am-img-thumbnail am-radius">
+            </li>
+            <li class="am-vertical-align" style="height: 90px;">
+              <div class="am-vertical-align-middle">
+                <strong class="am-link-muted am-text-lg am-text-nowrap">{{.Nickname}}</strong>
+                <br/>
+                <span class="am-link-muted am-text-nowrap">
+                {{if eq .AgLevel 0}}
+                管理员
+                {{else if eq .AgLevel 1}}
+                大咖一级
+                {{else if eq .AgLevel 2}}
+                小咖二级
+                {{end}}
+                </span>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li>
+          {{if lt .AgLevel 2}}
+          <ul class="am-avg-sm-3 am-text-center am-padding-vertical-sm">
+          {{else}}
+          <ul class="am-avg-sm-2 am-text-center am-padding-vertical-sm">
+          {{end}}
+            <li>
+              <a href="/user-cards">
+                <strong class="am-text-danger">{{.CardCnt}}枚</strong>
+                <br/>
+                <span class="am-link-muted">今日售出玉</span>
+              </a>
+            </li>
+            <li>
+              <a href="/user-balance">
+                <strong class="am-text-danger">¥{{.GetMoney .BalanceCnt}}</strong>
+                <br/>
+                <span class="am-link-muted">分销提成</span>
+              </a>
+            </li>
+            {{if lt .AgLevel 2}}
+            <li>
+              <strong class="am-text-danger">{{.AgentCnt}}人</strong>
+              <br/>
+              <span class="am-link-muted">我的代理</span>
+            </li>
+            {{end}}
+          </ul>
+        </li>
+        </ul>
+    </div>
+  </div>
+
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <ul class="am-list am-list-border">
+        {{if lt .AgLevel 2}}
+        <li><a href="/agent-auth"><i class="am-icon-tag am-icon-fw"></i> 下级代理授权<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        {{end}}
+        <li><a href="/query-order"><i class="am-icon-usd am-icon-fw"></i> 充值查询<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/query-balance"><i class="am-icon-pencil am-icon-fw"></i> 返现明细查询<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        {{if lt .AgLevel 2}}
+        <li><a href="/my-agents"><i class="am-icon-list-alt am-icon-fw"></i> 我的代理({{.AgentCnt}}人)<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        {{end}}
+        <li><a href="/my-players"><i class="am-icon-user am-icon-fw"></i> 我的玩家({{.PlayerCnt}}人)<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/activities"><i class="am-icon-volume-up am-icon-fw"></i> 推广活动<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="am-g">
+    <div class="am-u-sm-12 am-u-sm-centered">
+      <ul class="am-list am-list-border">
+        {{if eq .AgLevel 0}}
+        <li><a href="/verify-balance"><i class="am-icon-check-square-o am-icon-fw"></i> 提现审核<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        {{end}}
+        <li><a href="/edit-info"><i class="am-icon-wrench am-icon-fw"></i> 个人信息<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+        <li><a href="/login"><i class="am-icon-power-off am-icon-fw"></i> 退出<i class="am-icon-angle-right am-icon-fw am-fr"></i></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/amazeui.min.js"></script>
+</body>
+
+</html>
+{{end}}

@@ -1,0 +1,673 @@
+syntax = "proto2";
+
+package mj;
+
+message AbsMessage {
+    optional string token   = 1; // token
+    optional int32  msgID   = 2; // 消息号
+    optional bytes  msgBody = 3; // 消息内容
+}
+
+enum ActionType {
+    // 大厅相关
+    Login           = 100;
+    Logout          = 200;
+    Auth            = 300;
+    Dirty           = 400;
+    Error           = 500;
+    Feedback        = 600;
+    ResourceChange  = 700;
+    Broadcast       = 800;
+
+    // 邀请码支付相关
+    InviteCode      = 1100;
+    InviteList      = 1200;
+    InviteAward     = 1300;
+    GoodsList       = 1400;
+    OrderApply      = 1500;
+    OrderApplyNew   = 1600;
+
+    // 麻将房间相关
+    EnterRoom       = 2100; // 自己进入房间
+    OtherJoin       = 2200; // 其他人进入房间
+    ExitRoom        = 2300; // 退出房间
+    CloseRoom       = 2400; // 解散房间
+    VoteClose       = 2500; // 投票解散
+    GameChat        = 2600; // 游戏内聊天
+
+    // 麻将牌局相关
+    PrepareGame     = 3100; // 准备游戏
+    CancelPrepare   = 3200; // 取消准备
+    StartRound      = 3300; // 开始一局
+    EndRound        = 3400; // 结束一局(小结算)
+    Settlement      = 3500; // 全部结束(大结算)
+    GameRecord      = 3600; // 历史战绩
+    BuyPaoList      = 3700; // 买跑列表
+    BuyPao          = 3800; // 买跑
+
+    // 麻将逻辑相关
+    DrawCard        = 4100; // 抓牌
+    Discard         = 4200; // 出牌
+    Operation       = 4300; // 操作
+    DiscardNotice   = 4400; // 出牌提示
+    OperationNotice = 4500; // 操作提示
+}
+
+// 大厅玩家信息
+message Player {
+    optional int32  id       = 1; // 用户id
+    optional string nickname = 2; // 昵称
+    optional string avatar   = 3; // 头像
+    optional int32  gender   = 4; // 性别 0:未知 1:男性 2:女性
+    optional int32  coins    = 5; // 游戏币
+    optional int32  cards    = 6; // 房卡
+    optional string ip       = 7; // IP地址
+}
+
+// 开房资产消耗
+message Jushu {
+    optional int32  jushu  = 1; // 局数
+    optional int32  coins  = 2; // 金币
+    optional int32  cards  = 3; // 房卡
+    optional int32  mjType = 4; // 麻将类型（1）
+    optional string mjDesc = 5; // 麻将描述（河北麻将）
+}
+
+// 下线玩家信息
+message InvitePlayer {
+    optional int32  id       = 1; // 用户id
+    optional string nickname = 2; // 昵称
+    optional string avatar   = 3; // 头像
+    optional int32  state    = 4; // 是否领奖 0:没领  1：已领
+}
+
+// 商品信息
+message Goods {
+    optional int32  id        = 1; // 商品 id
+    optional int32  count     = 2; // 售卖数量
+    optional int32  extra     = 3; // 赠送数量
+    optional int32  price     = 4; // 价格 ￥
+    optional string iconUrl   = 5; // 图片 URL
+    optional int32  payType   = 6; // 1、App Store 2、苹果爱贝
+    optional string productID = 7; // 后台商品ID "com.snowcat.gem6"
+    optional int32  sort      = 8; // 排序
+}
+
+// ==============> 订单
+message OrderStatus {
+    required string orderID   = 1; // 订单ID
+    optional int32  status    = 2; // 订单状态 0:succ   1:error
+    optional string errorDesc = 3; // 错误描述
+    optional string jsonStr   = 4; // json
+    optional int32  gemID     = 5; //商品ID
+}
+
+message OrderData {
+    required int32  payType = 1; // 1、App Store 2、苹果爱贝
+    required string jsonStr = 2;
+}
+
+// 房间玩家信息
+message RoomPlayer {
+    optional int32  pos       = 1; // 位置（东南西北 1234顺序）
+    optional int32  score     = 2; // 分数
+    optional Player player    = 3; // 玩家信息
+    optional double latitude  = 4; // 纬度
+    optional double longitude = 5; // 经度
+}
+
+// 玩家所有牌
+message CardsInfo {
+    optional int32 pos           = 1; //位置
+    repeated int32 pengCards     = 2; //碰的牌
+    repeated int32 chiCards      = 3; //吃的牌
+    repeated int32 anGangCards   = 4; //暗杠的牌
+    repeated int32 mingGangCards = 5; //明杠的牌
+    repeated int32 discardCards  = 6; //打出去的牌
+    repeated int32 leftCards     = 7; //剩余的牌
+    optional int32 DrawCard      = 8; //刚刚抓的牌(-1 表示没有牌)
+    optional int32 paoScore      = 9; //买跑的分数(-1 表示没有买跑)
+}
+
+// 投票信息
+message VoteInfo {
+    optional int32 pos     = 1; // 位置
+    optional int32 action  = 2; // 投票状态
+}
+
+//一炮多响
+message MutiHu{
+    optional int32 pos      = 1;
+    repeated int32 cardList = 2;
+}
+
+// 胡牌类型
+
+// 河北麻将
+// 1 七对x2
+// 2 碰碰胡x2
+// 3 清一色x2
+// 4 清风x2
+// 5 一条龙x2
+// 6 豪华七对x4（不再算七对）
+// 7 超级豪华七对x8（不再算七对，豪华七对）
+// 8 至尊超级豪华七对x16（不再算七对，豪华七对，超级豪华七对）
+// 9 十三幺x10
+// 10 门清x2
+// 11 边x2
+// 12 卡x2
+// 13 吊x2
+// 14 杠上开花x2
+// 15 海底捞月x2
+// 16 捉五魁x4（不再算卡）
+// 17 素胡x2
+// 18 混儿吊x2（不再算吊）
+// 19 带庄闲x2 (庄家输赢)
+// 20 自摸x2
+
+// 21 点炮
+// 22 点杠-3
+// 23 明杠+3
+// 24 暗杠+6
+// 25 补杠+3
+
+// 河南麻将
+// 201 点炮
+// 202 接炮
+// 203 自摸胡
+// 204 小胡
+// 205 七对x2
+// 206 杠上花x2
+// 207 点杠
+// 208 明杠
+// 209 暗杠
+// 210 点碰
+// 211 碰杠
+// 212 四个混牌x2
+// 213 自摸胡x2
+// 214 暗杠x2
+
+message ResultItem {
+    optional int32 pos       = 1; // 位置
+    repeated int32 pengCards = 2; // 碰的牌
+    repeated int32 chiCards  = 3; // 吃的牌
+    repeated int32 gangCards = 4; // 杠的牌
+    repeated int32 leftCards = 5; // 剩余的牌
+    optional int32 drawCard  = 6; // 胡牌
+    optional int32 score     = 7; // 赢或者输的分数
+    optional int32 isHu      = 8; // 是否胡牌，是为1，否为0
+    repeated int32 huTypes   = 9; // 胡牌类型列表
+    optional int32 huScore   = 10; // 胡分
+    optional int32 gangScore = 11; // 杠分
+    optional int32 paoScore  = 12; // 买跑的分(-1 表示没有买跑)
+    optional int32 curScore  = 13; // 玩家当前的分数
+}
+
+// 大结算信息
+message SettleItem {
+    optional int32 pos        = 1; // 位置（东南西北 1234顺序）
+    optional int32 score      = 2; // 分数
+    optional int32 ziMoCnt    = 3; // 自摸次数
+    optional int32 jiePaoCnt  = 4; // 接炮次数
+    optional int32 dianPaoCnt = 5; // 点炮次数
+}
+
+// 历史战绩每局信息
+message RecordRound {
+    optional int32  curRound  = 1; // 当前局数
+    optional int32  roundID   = 2; // 对局id
+    optional string startTime = 3; // 开局时间
+    repeated int32  scoreList = 4; // 玩家分数列表
+}
+
+// 历史战绩房间信息
+message RecordRoom {
+    optional int32       roomID     = 1; // 房间id
+    optional int32       mjType     = 2; // 麻将类型
+    optional int32       totalRound = 3; // 总局数
+    optional string      createTime = 4; // 创建时间
+    repeated string      nameList   = 5; // 玩家昵称列表
+    repeated int32       scoreList  = 6; // 玩家分数列表
+    repeated RecordRound roundList  = 7; // 每局战绩
+}
+
+// 可操作信息
+message OperationItem {
+    optional int32  type       = 1; // 1 碰 2 胡 3 吃 4 明杠 5 暗杠 6 过 7 一炮多响 8 碰牌再杠 9 等别人操作 10 自摸胡 11 点跑胡
+    optional int32  keycard    = 2; // 关键牌
+    repeated int32  cardsList  = 3; // 可选的牌
+    optional int32  srcPos     = 4; // 放牌人的位置（谁打出的牌能够让别人操作）
+    optional int32  desPos     = 5; // 可操作人的位置
+    repeated MutiHu huInfoList = 6; // 一炮多响时用到，胡牌信息 
+}
+
+// login
+message LoginSend {
+    optional int32  channel      = 1; // 渠道
+    optional int32  version      = 2; // 版本
+    optional int32  loginType    = 3; // 登录方式(1: WX)
+    optional string session      = 4; // 第三方session
+    optional string machineID    = 5; // 机器码(mac地址)
+    optional int32  playerID     = 6; // 玩家id,用于自动登录
+    optional string refreshToken = 7; // 微信 refresh token
+}
+
+message LoginRecv {
+    optional int32  status      = 1; // 状态码(0: 成功,其它失败)
+    optional string logicServer = 2; // 逻辑服地址
+}
+
+// logout
+message LogoutSend {
+}
+
+message LogoutRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+}
+
+// auth
+message AuthSend {
+}
+
+message AuthRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+}
+
+// dirty
+message DirtySend {
+}
+
+message DirtyRecv {
+    optional int32  status       = 1; // 状态码(0: 成功,其它失败)
+    optional int32  roomID       = 2; // 玩家房间号(有房间号表示玩家在游戏内)
+    optional int32  highID       = 3; // 玩家上线ID
+    optional Player player       = 4; // 玩家个人信息
+    repeated Jushu  jushus       = 5; // 局数配置
+    optional string wchatID      = 6; // 客服微信号（游戏大厅弹出公告栏使用）
+    optional string module       = 7; // 模块配置
+    optional string refreshToken = 8; // 微信 refresh token
+}
+
+// error
+message ErrorSend {
+}
+
+message ErrorRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+}
+
+// 客服反馈
+message FeedbackSend {
+    optional int32  playerID = 1; // 用户 id
+    optional string imgUrl   = 2; // 图片cdn地址
+    optional string text     = 3; // 问题描述
+}
+
+message FeedbackRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+}
+
+// 资源变化
+message ResourceChangeSend {
+}
+
+message ResourceChangeRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 coins  = 2; // 金币(变化后)
+    optional int32 cards  = 3; // 房卡(变化后)
+}
+
+message BroadcastSend {
+
+}
+
+message BroadcastRecv {
+    optional int32  status = 1; // 状态码(0: 成功,其它失败)
+    repeated string text   = 2; // 文本消息
+}
+
+// 填写邀请码
+message InviteCodeSend {
+    optional int32 code = 1; // 邀请码
+}
+
+message InviteCodeRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 highID = 2; // 邀请码，原样返回
+    optional int32 coins  = 3; // 绑定邀请码之后的 coins 数量
+}
+
+// 获取下线列表
+message InviteListSend {
+}
+
+message InviteListRecv {
+    optional int32        status  = 1; // 状态码(0: 成功,其它失败)
+    repeated InvitePlayer players = 2; // 下线列表
+}
+
+// 领取下线奖励
+message InviteAwardSend {
+    optional int32 id = 1; // 下线id
+}
+
+message InviteAwardRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 coins  = 2; // 最新coins数量
+    optional int32 id     = 3; // 下线id
+}
+
+// 获取商品列表
+message GoodsListSend {
+}
+
+message GoodsListRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    repeated Goods goods  = 2; // 商品列表
+}
+
+// 订单
+message OrderApplySend {
+    optional int32 playerID = 1;
+    optional int32 channel  = 2;
+    optional int32 waresID  = 3;
+}
+
+message OrderApplyRecv {
+    optional int32  status    = 1; // 状态码(0: 成功,其它失败)
+    optional int32  coins     = 2; // 金币(变化后)
+    optional int32  cards     = 3; // 房卡(变化后)
+    optional string orderID   = 4; // 订单号
+    optional int32  price     = 5; // 金额
+    optional int32  payType   = 6; // 支付类型
+    optional int32  count     = 7; // 贩卖数量
+    optional string productID = 8; // 后台商品ID "11"，"12"
+}
+
+// ==============> 订单
+message OrderApplyNewSend {
+    repeated OrderData orderList = 1; // 订单ID
+}
+
+message OrderApplyNewRecv{
+    optional int32 status = 1;          // 状态码(0: 成功,其它失败)
+    optional int32 coins  = 2;          // 金币(变化后)
+    optional int32 cards  = 3;          // 房卡(变化后)
+    repeated OrderStatus orderList = 4; // 订单状态
+}
+
+// 开房配置
+//1 带风牌
+//2 可吃牌
+//3 点炮可胡
+//4 黄庄黄杠
+//5 带庄闲
+//6 门清
+//7 边卡吊
+//8 捉五魁
+//9 带混儿
+//10 素胡
+//11 混儿吊
+//12 点炮一家胡
+//13 点炮三家胡
+//14 点炮大包
+
+// 自己进入房间
+message EnterRoomSend {
+    optional int32  roomID    = 1; // 房间号(0 创建放间)
+    repeated int32  configs   = 2; // 房间配置信息
+    optional int32  mjType    = 3; // 麻将类型 1：河北麻将
+    optional int32  costType  = 4; // 1:金币 2：房卡
+    optional int32  round     = 5; // 局数
+    optional int32  relink    = 6; // 是否为断线重连，1:是，0:否
+    optional bool   cheat     = 7; // TRUE：开启防作弊 FALSE：关闭防作弊
+    optional double latitude  = 8; // 纬度
+    optional double longitude = 9; // 经度
+}
+
+message EnterRoomRecv {
+    optional int32      status        = 1;  // 状态码(0: 成功,其它失败)
+    optional int32      gameStatus    = 2;  // 牌局状态   1 牌局进行中 2 一局结束了 3 全部结束 4 牌局还未开始
+    optional int32      roomID        = 3;  // 房间id
+    optional int32      totalRound    = 4;  // 总局数
+    optional int32      curRound      = 5;  // 当前局数
+    optional int32      leftCards     = 6;  // 剩余牌数
+    optional int32      bankerPos     = 7;  // 庄家位置
+    optional int32      curPos        = 8;  // 当前操作位置
+    optional int32      lastPos       = 9;  // 上次出牌人的位置
+    repeated int32      configs       = 10; // 房间配置信息
+    repeated RoomPlayer playerList    = 11; // 玩家列表
+    repeated CardsInfo  cardsInfoList = 12; // 麻将列表
+    optional int32      hunCard       = 13; // 混牌 （用于断线重连，如果没有混牌，默认值为0）
+    optional int32      mjType        = 14; // 麻将类型 1：河北麻将
+    optional bool       cheat         = 15; // TRUE：开启防作弊 FALSE：关闭防作弊
+}
+
+// 其他人进入房间
+message OtherJoinSend {
+}
+
+message OtherJoinRecv {
+    optional int32      status = 1; // 状态码(0: 成功,其它失败)
+    optional RoomPlayer player = 2; // 玩家信息
+}
+
+// 退出房间
+message ExitRoomSend {
+}
+
+message ExitRoomRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 pos    = 2; // 位置
+}
+
+// 解散房间
+message CloseRoomSend {
+}
+
+message CloseRoomRecv {
+    optional int32 status    = 1; // 状态码(0: 成功,其它失败)
+    optional int32 closeType = 2; // 0，牌局正常结束 1，开始游戏前房主强制解散房间 3，投票通过解散房间
+}
+
+// 投票解散
+message VoteCloseSend {
+    optional int32 action = 1; // 投票状态(0 未投票 1 同意 2 拒绝)
+}
+
+message VoteCloseRecv {
+    optional int32    status   = 1; // 状态码(0: 成功,其它失败)
+    optional int32    leftTime = 2; // 倒计时
+    optional int32    firstPos = 3; // 发起人位置
+    repeated VoteInfo voteList = 4; // 投票列表
+}
+
+// 游戏内聊天
+message GameChatSend{
+    optional int32  types  = 1; // 类型(原样返回即可). 1 输入文本，2 已定义的文本，3 表情，4 语音
+    optional int32  messID = 2; // id(原样返回即可)
+    optional string text   = 3; // 文字 或者 语音ID
+}
+
+message GameChatRecv{
+    optional int32  status   = 1; // 状态码(0: 成功,其它失败)
+    optional int32  playerID = 2; // 玩家ID
+    optional string nickName = 3; // 昵称; 限定64字符，允许emoji
+    optional int32  types    = 4; // 类型(原样返回即可)
+    optional int32  messID   = 5; // id(原样返回即可)
+    optional string text     = 6; // 文字
+    optional string avatar   = 7; // 头像
+}
+
+// 准备游戏
+message PrepareGameSend {
+}
+
+message PrepareGameRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 pos    = 2; // 操作位置
+}
+
+// 取消准备
+message CancelPrepareSend {
+}
+
+message CancelPrepareRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 pos    = 2; // 操作位置
+}
+
+// 开始一局
+message StartRoundSend {
+}
+
+message StartRoundRecv {
+    optional int32 status     = 1; // 状态码(0: 成功,其它失败)
+    optional int32 curRound   = 2; // 当前局数
+    optional int32 leftCards  = 3; // 剩余牌数
+    optional int32 bankerPos  = 4; // 庄家位置
+    repeated int32 cardsCount = 5; // 玩家牌数列表
+    repeated int32 myCards    = 6; // 我的麻将列表
+    optional int32 totalRound = 7; // 总局数
+    repeated int32 scoreList  = 8; // 玩家分数 东南西北顺序
+    optional int32 hunCard    = 9; // 混牌
+    optional int32 preHunCard = 10; //混牌之前抓的显示牌
+}
+
+// 结束一局
+message EndRoundSend {
+}
+
+message EndRoundRecv {
+    optional int32      status   = 1; // 状态码(0: 成功,其它失败)
+    repeated ResultItem itemList = 2; // 显示条目
+}
+
+// 大结算
+message SettlementSend {
+}
+
+message SettlementRecv {
+    optional int32      status      = 1; // 状态码(0: 成功,其它失败)
+    repeated SettleItem SettleList  = 2; // 结算列表
+    optional int32      isVoteClose = 3; // 是否是投票结束牌局，是返回1，否返回0
+}
+
+// 历史战绩
+message GameRecordSend {
+}
+
+message GameRecordRecv {
+    optional int32      status  = 1; // 状态码(0: 成功,其它失败)
+    repeated RecordRoom records = 2; // 战绩列表
+}
+
+// 抓牌
+message DrawCardSend {
+}
+
+message DrawCardRecv {
+    optional int32 status    = 1; // 状态码(0: 成功,其它失败)
+    optional int32 pos       = 2; // 抓牌位置
+    optional int32 card      = 3; // 抓的牌
+    repeated int32 tingCards = 4; // 听牌
+}
+
+// 出牌
+message DiscardSend {
+    optional int32 card = 1; // 麻将
+}
+
+message DiscardRecv {
+    optional int32 status    = 1; // 状态码(0: 成功,其它失败)
+    optional int32 card      = 2; // 出的麻将
+    optional int32 pos       = 3; // 谁出的牌
+    repeated int32 leftCards = 4; // 剩余的牌型，仅自己出牌之后进行检查数据用
+}
+
+// 操作
+message OperationSend {
+    optional OperationItem operation = 1; // 操作
+}
+
+message OperationRecv {
+    optional int32         status    = 1; // 状态码(0: 成功,其它失败)
+    optional OperationItem operation = 2; // 操作
+}
+
+// 出牌提示
+message DiscardNoticeSend {
+}
+
+message DiscardNoticeRecv {
+    optional int32 status = 1; // 状态码(0: 成功,其它失败)
+    optional int32 pos    = 2; // 出牌位置
+}
+
+// 操作提示
+message OperationNoticeSend {
+}
+
+message OperationNoticeRecv {
+    optional int32         status        = 1; // 状态码(0: 成功,其它失败)
+    repeated OperationItem operationList = 2; // 操作列表
+}
+
+//买跑列表
+message BuyPaoListSend {
+}
+
+message BuyPaoListRecv {
+    optional int32   status        = 1; // 状态码(0: 成功,其它失败)
+    repeated int32   paoScoreList  = 2; // 买跑分数列表
+}
+
+//买跑操作
+message BuyPaoSend {
+    optional int32   paoScore      = 1; //买跑的分数
+}
+
+message BuyPaoRecv {
+    optional int32   status        = 1; //状态码(0: 成功,其它失败)
+    optional int32   paoScore      = 2; //买跑的分数
+    optional int32   pos           = 3; //买跑人的位置
+}
+
+
+// 错误码
+// StatusFailed = -1 // 失败(服务器用)
+// StatusOK     = 0  // 成功
+
+// StatusErrorLoginType     = 101 // 错误的登录类型
+// StatusErrorWeixin        = 102 // 微信登录失败
+// StatusErrorWeixinExpires = 103 // 微信登录过期
+// StatusErrorLogin         = 104 // 登录服务器异常
+
+// StatusErrorToken  = 301 // token错误
+// StatusErrorPlayer = 302 // 玩家不存在
+// StatusErrorRoom   = 303 // 房间不存在
+// StatusErrorLogic  = 304 // 逻辑服务器异常
+
+// StatusNoPlayer  = 401 // 玩家不存在
+// StatusNoRoom    = 402 // 房间不存在
+// StatusNotInRoom = 403 // 玩家不在房间
+
+// StatusErrorInviteCode   = 1101 // 邀请码无效
+// StatusErrorInviteFailed = 1102 // 绑定邀请码失败
+// StatusErrorInviteInfo   = 1103 // 领取信息有误
+// StatusErrorInviteAward  = 1104 // 领取奖励失败
+
+// StatusErrorCreateRoom  = 2101 // 创建房间失败
+// StatusErrorNoRoomID    = 2102 // 房间号不存在
+// StatusErrorRoomIsFull  = 2103 // 房间满员了
+// StatusErrorIPConflict  = 2104 // IP冲突
+// StatusErrorGeoConflict = 2105 // GPS位置太近
+// StatusErrorGPSNotOpen  = 2106 // GPS未打开
+
+// StatusIsStart   = 2201 // 游戏已经开始(退出房间)
+// StatusNoStart   = 2202 // 游戏还没开始(投票退出)
+// StatusIsGaming  = 2203 // 游戏正在进行(准备游戏)
+// StatusNotGaming = 2204 // 游戏不在进行(取消准备)
+// StatusNotOwner  = 2205 // 不是房主(关闭房间)
+// StatusOperError = 2206 // 操作非法(操作)
+// StatusBuyPao    = 2208 // 已经买跑(买跑)
