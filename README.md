@@ -4,6 +4,7 @@
 ## mysql
 - 安装 pocker pull mysql
 - 启动 docker run --name first-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql
+- 数据初始化 执行db/sql下的脚本
 
 ## qnmahjong
 - 编译 GOOS=linux GOARCH=amd64 go build -ldflags "-X main.branch=`git rev-parse --abbrev-ref HEAD` -X main.commit=`git rev-parse HEAD`"
