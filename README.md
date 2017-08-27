@@ -2,7 +2,7 @@
 
 
 ## mysql
-- 安装 pocker pull mysql
+- 安装 docker pull mysql
 - 启动 docker run --name first-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=123456 -d mysql
 - 数据初始化 执行db/sql下的脚本
 
