@@ -7,7 +7,7 @@
 - 数据初始化 执行db/sql下的脚本
 
 ## qnmahjong
-- 编译 GOOS=linux GOARCH=amd64 go build -ldflags "-X main.branch=`git rev-parse --abbrev-ref HEAD` -X main.commit=`git rev-parse HEAD`"
+- 编译 GOOS=linux GOARCH=amd64 go build -o qnmahjong -ldflags "-X main.branch=`git rev-parse --abbrev-ref HEAD` -X main.commit=`git rev-parse HEAD`"
 - 配置 修改conf_pro.toml配置文件
 - 安装 docker build -t qnmahjong . 
 - 启动 login : docker run -it --rm --name qnmahjong_login --link first-mysql:mysql -p 5001:5001 qnmahjong login
