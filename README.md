@@ -15,3 +15,8 @@
 
 ## 客户端登录
 -- 示例登录地址 http://100.100.33.99:5001
+
+---
+## 联系方式/商业咨询:
+- ![二维码](http://oupthc6v2.bkt.clouddn.com/qr.jpg?imageView2/2/w/200/h/200/format/jpg/q/75|imageslim)
+- QQ技术支持群: 99124448
